@@ -1,0 +1,109 @@
+=========================================================================
+           CSE755, LISP Interpreter Project Design
+=========================================================================
+Author:		Karthik Raj Saanthalingam
+=========================================================================
+
+The implementation of the Lisp interpreter can be broadly classified into
+four categories as follows
+
+---------------------------------
+1. Lisp interpreter main function
+---------------------------------
+main():
+   The point of entry for exection
+   The main function will:
+	1. Read Lisp expressions from an input file
+    2. Parse the input string into Lisp s-expression and validates the input
+	3. Initialize a-list and d-list as empty tables
+	4. Interprets and prints s-expressions one at a time
+
+---------------------------
+2. eval and apply functions
+---------------------------
+The core part of the Lisp Interpreter
+
+eval(exp,alist,dlist):
+   Evaluates a given s-expression, based on the parameter bindings (a-list) and
+   function definitions (d-list).
+
+evcon(be,alist,dlist):
+   Evaluates a conditional expression. Given ((b1 e1) (b2 e2)...), uses eval
+   to evaluate b1, b2,... until some bi evaluates to T; and then uses eval to
+   evaluate corresponding ei and return its value.
+
+evlis(list,alist,dlist):
+   Evaluate a list of Lisp s-expressions.
+
+apply(f,x,alist,dlist):
+   Applies a function to given set of argument values - gets the function
+   definition from d-list, binds the formal parameters to corresponding
+   argument values, then calls eval to evaluate the body of the function.
+
+addPairs(plist,x,alist):
+   Update the a-list with the parameter-value binding (plist[i],x[i]) pairs.
+
+--------------------------------------
+3. string / s-exp conversion functions
+--------------------------------------
+stringNormalize(string):
+   Normalizes the given input string. Includes
+   1. Converting the input string to Uppercase before evaluation
+   2. Removes the escape sequence characters and redundant white spaces
+
+convertStrToSexp(string):
+   Converts a string into a s-expression i.e builds the internal represenation
+   s-expression as a binary tree.
+
+sexpToString(sexp,flag):
+   Converts a s-expression tree into output string format. Prints the output in
+   list notation whenever possible else uses a combination of list and dot notation.
+
+isList(sexp):
+   Checks if a s-expression is a list or not.
+
+length(sexp):
+   Compute the length of a single s-exp i.e the depth of the binary tree.
+
+dotToTree(tokens):
+   Constructs a binary tree from the dot notation.
+
+listToTree(tokens):
+   Convert a list notation into a binary tree.
+
+getNextToken(string):
+   Search for the next token in the input string to be evaluated.
+
+removeParentheses(string):
+   Eliminates the outermost pair of parentheses.
+
+checkParentheses(string):
+   Checks if the opening and closing parentheses are balanced.
+
+------------------
+4. Lisp primitives
+------------------
+The basic Lisp primitives that are defined in the Sexpression class
+The methods are visible only to the members of the Sexpression class and its subclass
+
+car(s): returns an error if s is atomic else returns the left branch of the binary tree
+cdr(s): returns an error if s is atomic else returns the right branch of the binary tree
+cons(s1,s2): returns [s1,s2] -> (s1 . s2)
+atom(s): returns T if s is atomic, else return NIL
+eq(s1,s2): returns an error if s1 or s2 is not atomic else returns T or NIL
+NULL(s): checks if s is the atom NIL
+isInt(s): checks if s is an integer atom
+plus(s1,s2): returns s1 + s2
+minus(s1,s2): returns s1 - s2
+times(s1,s2): returns s1 * s2
+quotient(s1,s2): returns s1 / s2
+remainder(s1,s2): returns s1 % s2
+less(s1,s2): returns s1 < s2? T: NIL
+greater(s1,s2): returns s1 > s2? T: NIL
+
+Input string is converted to uppercase before evaluation and hence mixed-case and lower-case inputs are also allowed.
+Evaluation quits when there is an error in the input s-expression.
+
+
+
+
