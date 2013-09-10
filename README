@@ -1,0 +1,57 @@
+===============================================================
+           CSE755, Lisp Interpreter Project
+===============================================================
+Author: 	 Karthik Raj Saanthalingam
+===============================================================
+
+Q: How to compile and run the application?
+A: The Lisp interpreter is implemented in Java (JDK 1.6). To compile and run the application
+   from command prompt,
+	1. Set class path to point to JDK 1.6
+		subscribe JDK6
+		set PATH=($PATH  /usr/local/jdk1.6.0_04/bin)
+		set CLASSPATH=(. /usr/java/lib/tools.jar /usr/java/lib/dt.jar)
+	2. Log out and login again
+	3. Compile the application as follows
+		javac Sexpression.java Interpreter.java
+	4. Run the application as follows
+		java -mx300m Interpreter
+	To compile the application using Makefile,
+		1. Type 'make' in the directory containing the java source files
+		2. java -mx300m Interpreter
+
+Q: How can the interpreter read the input data?
+A: The interpreter reads input from a single file. Execute the 
+   interpreter and type the input file name when prompted.
+   For example, if the input data is saved in a file 'input.txt',
+		% java -mx300m Interpreter
+		Enter the name of the input file:
+		input.txt
+
+Q: What is the format for the input file?
+A: The input file should be in plain text format. The interpreter will interpret one
+   s-expression at a time. A single s-expression can be in different lines as long as 
+   it is parenthesesed correctly. Both Uppercase and lowercase characters are allowed.
+
+Q: Any unusal things about the expected input?
+A: 1.The application relies on Java Garbage Collection mechanism and deep recursions may result
+     in Stack overflow error.
+   2.Valid numbers are always assumed to be integers and a dot '.' would indicate the cons notation.
+     Example: 
+         (5.4) -> (5 . 4)
+   3.A dot notation with more than one dot is considered to be invalid. 
+     Example:
+	 (1 . 2 . 3) -> Invalid
+	 (1 .(2 . 3)) -> Valid
+   4.A list notation with any dot will be considered invalid. 
+	 Example:
+	 (1 2 3 . 4) -> Invalid
+   5.Empty parentheses will be treated as NIL. () -> NIL
+
+Q. What is the output format for this interpreter?
+A. The interpreter will print the s-expression that is evaluated and its evaluated result
+   Any error will cause the program to abort after having printed an error message.
+
+
+   
+   
